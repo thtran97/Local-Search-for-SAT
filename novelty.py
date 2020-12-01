@@ -1,6 +1,7 @@
 '''
 References
 [1] D. McAllester, B. Selman, and H. Kautz, “Evidence for invariants in local search,” Proc. Natl. Conf. Artif. Intell., pp. 321–326, 1997.
+[2] H. H. Hoos and T. Stützle, “Towards a characterization of the behaviour of stochastic local search algorithms for SAT,” Artif. Intell., vol. 112, no. 1, pp. 213–232, 1999, doi: 10.1016/S0004-3702(99)00048-X.
 '''
 
 from base_solver import Base_Solver
@@ -11,10 +12,13 @@ from itertools import chain
 
 class Novelty(Base_Solver):
     
-    def __init__(self, input_cnf_file, verbose, noise_parameter = 0.2):
+    def __init__(self, input_cnf_file, verbose, noise_parameter = 0.2, random_walk_noise = None):
         super(Novelty, self).__init__(input_cnf_file, verbose)
         self.noise_parameter = noise_parameter
         self.most_recent = None
+        # Introduce random walk noise parameter => Novelty+
+        if random_walk_noise is not None:
+            self.random_walk_noise = random_walk_noise
 
     def solve(self):
         initial =  time.time()
@@ -46,6 +50,15 @@ class Novelty(Base_Solver):
                     for literal in all_unsat_lits:
                         cost.append(self.evaluate_breakcount(literal, bs=1, ms=1))
                     '''
+                    Random walk
+                    '''
+                    apply_novelty =  True
+                    if self.random_walk_noise is not None:
+                        wp = random.random()
+                        if wp < self.random_walk_noise:
+                            x = random.choice(all_unsat_lits)
+                            apply_novelty = False
+                    '''
                     [Novelty strategy]
                     Arrange variables according to each cost
                     (1) If the best one *x1* is NOT the most recently flipped variable => select *x1*. 
@@ -53,24 +66,28 @@ class Novelty(Base_Solver):
                     (2a) select *x2* with probability p, 
                     (2b) select *x1* with probability 1-p.
                     '''
-                    if len(all_unsat_lits) == 1: 
-                        x = all_unsat_lits[0]
-                    else: 
-                        best_id = np.argmin(cost)
-                        best_var = all_unsat_lits[best_id]
-                        cost.pop(best_id)
-                        all_unsat_lits.remove(best_var)
-                        second_best_id = np.argmin(cost)
-                        second_best_var = all_unsat_lits[second_best_id]
-                        # best_var, second_best_var = all_unsat_lits[0], all_unsat_lits[1]
-                        if abs(best_var) != self.most_recent: #(1)
-                            x = best_var
-                        else:
-                            p = random.random()
-                            if p < self.noise_parameter: #(2a)
-                                x = second_best_var
-                            else: #(2b)
+                    if apply_novelty:
+                        if len(all_unsat_lits) == 1: 
+                            x = all_unsat_lits[0]
+                        else: 
+                            best_id = np.argmin(cost)
+                            best_var = all_unsat_lits[best_id]
+                            cost.pop(best_id)
+                            all_unsat_lits.remove(best_var)
+                            second_best_id = np.argmin(cost)
+                            second_best_var = all_unsat_lits[second_best_id]
+                            # best_var, second_best_var = all_unsat_lits[0], all_unsat_lits[1]
+                            if abs(best_var) != self.most_recent: #(1)
                                 x = best_var
+                            else:
+                                p = random.random()
+                                if p < self.noise_parameter: #(2a)
+                                    x = second_best_var
+                                else: #(2b)
+                                    x = best_var
+                    '''
+                    After choosing x, flip it and save this last recent move
+                    '''
                     self.flip(x) 
                     self.most_recent = abs(x)
 
