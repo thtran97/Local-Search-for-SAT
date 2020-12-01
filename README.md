@@ -19,9 +19,9 @@ Some core functions of this solver are:
 
 The main pipeline is:
 
-1- Generate an assignment 
+1- Generate an assignment. 
 
-2- Check if SAT or not. If SAT => Done
+2- Check if SAT or not. If SAT => Done.
 
 3- If UNSAT, pick (intelligently or magically) 'best' variable to flip. Repeat 2. 
 
@@ -29,15 +29,15 @@ The main pipeline is:
 
 The algorithm only stop only when formula is SAT or after a defined number of tries and flips. That's why the result is either SAT or UNKNOWN -> not sure if the instances are UNSAT...
 
-The main computation cost is of checker-part : check if assignment satifies formula, i.e. **X |= F**?
+The main computation cost is of checker-part : check if assignment satifies formula, i.e. **X |= F**?.
 
-Besides, assignment **X' = flip(X)** => the difference is only of one variable => how can we save computational cost in (re)checking **X' |= F**?
+Besides, assignment **X' = flip(X)** => the difference is only of one variable => how can we save computational cost in (re)checking **X' |= F**?.
 
-In addition, how can we compute efficiently break-count and make-count of a variable *x*? 
+In addition, how can we compute efficiently break-count and make-count of a variable *x*?. 
 
-Which variable should be flipped?
+Which variable should be flipped?.
 
-How to escape the stagnation situation? 
+How to escape the stagnation situation?. 
 
 etc. 
 
@@ -45,11 +45,11 @@ etc.
 
 #### 1. GSAT, 1992 :white_check_mark:
 
-***Idea:*** Considering all variables in all unsat clause, then pick the one that minimizes the number of UNSAT clauses => min cost = break - make
+***Idea:*** Considering all variables in all unsat clause, then pick the one that minimizes the number of UNSAT clauses => min cost = break - make.
 
 #### 2. GSAT/Random Walk, 1993  :white_check_mark:
 
-***Idea:***  With probability p => pick any variable. Otherwise => pick best local move ! 
+***Idea:***  With probability p => pick any variable. Otherwise => pick best local move !. 
 
 #### 3. WalkSAT & WalkSAT/Random Walk, 1994 :white_check_mark:
 
@@ -65,19 +65,25 @@ etc.
 
 - If all variables in all UNSAT clauses are tabu =>  tabu list is temporarily ignored
 
-In general, tabu list should be implemented as a FIFO circular list => tabu tenure *t* is fixed as the length of tabu list. However, tabu tenure can be dynamically changed during search in a more complex variant (Reactive Tabu Search, we will see it later)
+In general, tabu list should be implemented as a FIFO circular list => tabu tenure *t* is fixed as the length of tabu list. However, tabu tenure can be dynamically changed during search in a more complex variant (Reactive Tabu Search, we will see it later).
 
-#### 5. Novelty, 1997 :x:
+#### 5. Novelty, 1997 :white_check_mark:
 
-***Idea:*** Sort variables according to cost, as does GSAT. Under this specific sort, consider the best *x1* and second-best variable *x2*. (1) If the best one *x1* is NOT the most recently flipped variable => select *x1*. Otherwise, (2a) select *x2* with probability p, (2b) select *x1* with probability 1-p
+***Idea:*** Sort variables according to cost, as does GSAT. Under this specific sort, consider the best *x1* and second-best variable *x2*. 
 
-=> Improvements for selecting flipping variables
+(1) If the best one *x1* is NOT the most recently flipped variable => select *x1*. 
 
-#### 6. R-Novelty, 1997 :x:
+Otherwise, (2a) select *x2* with probability p, (2b) select *x1* with probability 1-p.
 
-***Idea:*** Similar to Novelty, except in case of *x1* is the most recently flipped variable ! 
+=> Improvements for selecting flipping variables by breaking tie in favor of the least recently variable.
 
-In this case, let n = |cost(x1) - cost(x2)| >= 1. Then:
+=> Enhance its diversification capacity.         
+
+#### 6. R-Novelty, 1997 :white-check-mark:
+
+***Idea:*** Similar to Novelty, except in case of *x1* is the most recently flipped variable !. 
+
+In this case, let n = |cost(x1) - cost(x2)| >= 1. Then if:
 
 (2a) p < 0.5 & n > 1  => pick *x1*
 
@@ -89,7 +95,9 @@ In this case, let n = |cost(x1) - cost(x2)| >= 1. Then:
 
 Intuitively, the idea behind R_Novelty is that the difference in objective function should influence our choice, i.e. a large difference favors the best one.
 
-#### 7. Novelty+ & R-Novelty+, 1999 :x:
+- [ ] Influence of noise parameter p ? 
+
+#### 7. Novelty+ & R-Novelty+, 1999 :white-check-mark:
 
 ***Idea:*** Introduce Random Walk into Novelty and R-Novelty to prevent the extreme stagnation behavior. With probability wp => pick randomly, otherwise with probability 1-wp, follow the strategy of Novelty and R-Novelty.
 
@@ -103,7 +111,7 @@ Intuitively, the idea behind R_Novelty is that the difference in objective funct
 
 #### 10. Iterated Reactive Tabu Search (IRoTS), 2003 :x:
 
-***Idea:*** Combine the performances of both approaches
+***Idea:*** Combine the performances of both approaches.
 
 #### 11. Adaptive Memory-Based Local Search (AMLS), 2012 :x:
 
