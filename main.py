@@ -2,8 +2,8 @@
 
 import numpy as np
 from utils import get_args
-from walksat import WalkSAT_Solver
-
+from full_basic_walksat_solver import WalkSAT_Solver
+# from gsat import GSAT
 def main():
     try:
         args = get_args()
@@ -13,7 +13,6 @@ def main():
         print("missing or invalid arguments")
         exit(0)
 
-    # dpll_solver.solve(input_cnf_file, verbose)
     solver = WalkSAT_Solver(input_cnf_file, verbose)
     solver.solve()
 
