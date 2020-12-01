@@ -31,7 +31,7 @@ The algorithm only stop only when formula is SAT or after a defined number of tr
 
 The main computation cost is of checker-part : check if assignment satifies formula, i.e. **X |= F**?
 
-Besides, assignment **X' = flipping(X)** => the difference is only one variable => how can we save computational cost in checking **X' |= F**?
+Besides, assignment **X' = flip(X)** => the difference is only of one variable => how can we save computational cost in (re)checking **X' |= F**?
 
 In addition, how can we compute efficiently break-count and make-count of a variable *x*? 
 
@@ -69,8 +69,9 @@ In general, tabu list should be implemented as a FIFO circular list => tabu tenu
 
 #### 5. Novelty, 1997 :x:
 
-***Idea:*** Under a specific sort (?), consider the best *x1* and second-best variable *x2*. (1) If the best one *x1* is NOT the most recently flipped variable => select *x1*. Otherwise, (2a) select *x2* with probability p, (2b) select *x1* with probability p-1
+***Idea:*** Sort variables according to cost, as does GSAT. Under this specific sort, consider the best *x1* and second-best variable *x2*. (1) If the best one *x1* is NOT the most recently flipped variable => select *x1*. Otherwise, (2a) select *x2* with probability p, (2b) select *x1* with probability 1-p
 
+=> Improvements for selecting flipping variables
 
 #### 6. R-Novelty, 1997 :x:
 

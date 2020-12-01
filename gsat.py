@@ -1,9 +1,7 @@
-''''''
-
-# References
-# [1] B. Selman, H. Levesque, and D. Mitchell, “A New Method for Solving Hard Satisfiability Problems,” Proc. Tenth Natl. Conf. Artif. Intell., no. July, pp. 440–446, 1992.
-
-''''''
+'''
+References
+[1] B. Selman, H. Levesque, and D. Mitchell, “A New Method for Solving Hard Satisfiability Problems,” Proc. Tenth Natl. Conf. Artif. Intell., no. July, pp. 440–446, 1992.
+'''
 
 from base_solver import Base_Solver
 import numpy as np
