@@ -1,4 +1,4 @@
-# Walk-SAT
+# Local Search based algorithms for solving SAT
 
 This repo is an (re)implementation of LS-based SAT Solver, in which a typical algorithm is WalkSAT. 
 Let's start !!
@@ -47,37 +47,30 @@ etc.
 
 ***Idea:*** Considering all variables in all unsat clause, then pick the one that minimizes the number of UNSAT clauses => min cost = break - make
 
-***Result:*** Nb of max flips and max tries are too small to find a SAT solution => the result is UNKNOWN ! 
-
 #### 2. GSAT/Random Walk, 1993  :white_check_mark:
 
 ***Idea:***  With probability p => pick any variable. Otherwise => pick best local move ! 
-
-***Result:*** However, GSAT with random walk (certainly with prefixed parameters of MAX_TRIES and MAX_FLIPS) still return UNKNOWN => need more iterations... maybe...
 
 #### 3. WalkSAT & WalkSAT/Random Walk, 1994 :white_check_mark:
 
 ***Idea:*** Pick (randomly) one UNSAT clause, then pick the variable that minimizes break => score = break. In addition, the original strategy of Selman, Kautz, and Cohen (1994), called SKC stragegy, proposed that: "never make a random move if there exists one literal with zero break-count". Obviously, flipping literal with zero break-count will improve the objective function (= number of SAT clauses).
 
-***Result:*** Given a SAT instance, result is correctly SAT. WalkSAT with random walk returns output slightly faster and less number of tries. 
+#### 4. GSAT/Tabu & WalkSAT/Tabu, 1997 :white_check_mark:
 
-#### 4. GSAT/Tabu & WalkSAT/Tabu, 1997 :x:
+***Idea:*** Use a tabu list which store (flipped variables, tabu tenures) to avoid repeating these last recent moves. Intuitively, a couple *(x,t)* means that we forbid flipping *x* for next *t* iterations ! More concretely,
 
-***Idea:*** Use a tabu list which store (flipped variables, tabu tenures) to avoid repeating these last recent moves. Intuitively, a couple *(x,t)* means that we forbid flipping *x* for next *t* iterations ! 
+- Refuse flipping a variable in tabu list
 
-Note that tabu list should be implemented as a FIFO circular list.  
+- In case of *WalkSAT/Tabu*, if all the variables in the chosen UNSAT clause are tabu => choose another UNSAT clause instead
 
-***Parameter choice:***
+- If all variables in all UNSAT clauses are tabu =>  tabu list is temporarily ignored
 
-- Length of tabu list => fixed tabu tenure
-
-***Result:*** 
+In general, tabu list should be implemented as a FIFO circular list => tabu tenure *t* is fixed as the length of tabu list. However, tabu tenure can be dynamically changed during search in a more complex variant (Reactive Tabu Search, we will see it later)
 
 #### 5. Novelty, 1997 :x:
 
 ***Idea:*** Under a specific sort (?), consider the best *x1* and second-best variable *x2*. (1) If the best one *x1* is NOT the most recently flipped variable => select *x1*. Otherwise, (2a) select *x2* with probability p, (2b) select *x1* with probability p-1
 
-***Result:***
 
 #### 6. R-Novelty, 1997 :x:
 
@@ -122,6 +115,10 @@ Let's review some strategies of LS-based SAT Solver by fixing some parameters (M
 ## TODO
 
 - [ ] Implement other heuristics for choosing unsat clause and variable to flip ! 
+
+- [ ] Find benchmarking dataset (e.g. [SATLIB benchmark](https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html)) and criterions for measuring the performance of a strategy and use it to compare with others
+
+- [ ] Build a test script for comparing performances of all implemented strategies
 
 - [ ] Further idea is to apply Knowledge Compilation techniques so that we can answer consistence query in polynomial time 
 
