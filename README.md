@@ -79,7 +79,7 @@ Otherwise, (2a) select *x2* with probability p, (2b) select *x1* with probabilit
 
 => Enhance its diversification capacity.         
 
-#### 6. R-Novelty, 1997 :white-check-mark:
+#### 6. R-Novelty, 1997 :white_check_mark:
 
 ***Idea:*** Similar to Novelty, except in case of *x1* is the most recently flipped variable !. 
 
@@ -97,7 +97,7 @@ Intuitively, the idea behind R_Novelty is that the difference in objective funct
 
 - [ ] Influence of noise parameter p ? 
 
-#### 7. Novelty+ & R-Novelty+, 1999 :white-check-mark:
+#### 7. Novelty+ & R-Novelty+, 1999 :white_check_mark:
 
 ***Idea:*** Introduce Random Walk into Novelty and R-Novelty to prevent the extreme stagnation behavior. With probability wp => pick randomly, otherwise with probability 1-wp, follow the strategy of Novelty and R-Novelty.
 
