@@ -28,18 +28,26 @@ class GSAT(Base_Solver):
                 if self.check() == 1: # if no unsat clause => finish
                     self.is_sat = True
                 else:
-                    assert len(self.unsat_clauses) > 0 
+                    assert len(self.id_unsat_clauses) > 0 
                     '''
                     - GSAT idea (Intensification => focus on best var)
                     - Among all variables that occur in unsat clauses
                     - Choose a variable x which minimizes cost to flip
                     '''
-                    all_unsat_lits = list(set(self.unsat_clauses)) # flatten & remove redundants
+                    all_unsat_lits = []
+                    for ind in self.id_unsat_clauses:
+                        all_unsat_lits += self.list_clauses[ind]
+                    all_unsat_lits = list(set(all_unsat_lits)) # flatten & remove redundants
+                    '''
+                    Compute cost when flipping each literal 
+                    Cost = break - make
+                    '''
                     break_count = []
                     for literal in all_unsat_lits:
                         break_count.append(self.evaluate_breakcount(literal, bs=1, ms=1))
-                    
-                    # Random walk 
+                    '''
+                    Random walk  
+                    '''
                     if self.random_walk:
                         p = random.random()
                         if p < self.noise_parameter: # pick x randomly from literals in all unsat clause

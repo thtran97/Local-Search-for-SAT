@@ -10,7 +10,7 @@ class Base_Solver:
         self.verbose = verbose
         self.assignment = []
         self.pool = dict() #key: literal -> element: index of clause which contains literal 
-        self.unsat_clauses = [] # save id of unsat clause
+        self.id_unsat_clauses = [] # save id of unsat clause
         self.costs = np.zeros(len(self.list_clauses)) #compute nb of literals make clause true (i.e. for clause Ci, if fi>0 => T, fi==0 => F)
         self.MAX_TRIES = 100
         self.MAX_FLIPS = 500
@@ -41,18 +41,18 @@ class Base_Solver:
         # Compute nb of literals make clause true (i.e. for clause Ci, if fi>0 => T, fi==0 => F)
         # Let's call it cost ! 
         assert len(self.assignment) > 0
-        self.unsat_clauses = []
+        self.id_unsat_clauses = []
         for i, clause in enumerate(self.list_clauses):
             self.costs[i] = 0
             for literal in clause:
                 if literal in self.assignment:
                     self.costs[i] += 1
             if self.costs[i] == 0: #Clause[i] is currently UNSAT
-                self.unsat_clauses.append(i)
+                self.id_unsat_clauses.append(i)
     
     def check(self):
         # check if all is SAT 
-        return len(self.unsat_clauses) == 0
+        return len(self.id_unsat_clauses) == 0
 
     def evaluate_breakcount(self, literal, bs=1, ms=1):
         # Compute the breakcount score: #clause which turn SAT -> UNSAT
@@ -95,12 +95,12 @@ class Base_Solver:
             for i in self.pool[old_literal]:
                 self.costs[i] -= 1
                 if self.costs[i] == 0: # if SAT -> UNSAT: add to list of  unsat clauses
-                    self.unsat_clauses.append(i)
+                    self.id_unsat_clauses.append(i)
         # Clause contains -literal => cost ++
         if -old_literal in self.pool.keys():
             for j in self.pool[-old_literal]:
                 if self.costs[j] == 0: # if UNSAT -> SAT: remove from list of unsat clauses
-                    self.unsat_clauses.remove(j)
+                    self.id_unsat_clauses.remove(j)
                 self.costs[j] += 1
 
     def solve(self):

@@ -20,8 +20,8 @@ class WalkSAT(Base_Solver):
         self.noise_parameter = noise_parameter
 
     def pick_unsat_clause(self):
-        assert len(self.unsat_clauses) > 0
-        random_index = random.choice(self.unsat_clauses)
+        assert len(self.id_unsat_clauses) > 0
+        random_index = random.choice(self.id_unsat_clauses)
         return self.list_clauses[random_index]
 
     def solve(self):
@@ -34,24 +34,26 @@ class WalkSAT(Base_Solver):
                 if self.check() == 1: # if no unsat clause => finish
                     self.is_sat = True
                 else:
-                    assert len(self.unsat_clauses) > 0 
+                    assert len(self.id_unsat_clauses) > 0 
                     '''
                     - WalkSAT idea 
                     - Among all variables that occur in unsat clauses, pick one randomly ! (=> Diverisification)
-                    - Choose a variable x which minimizes break count in this unsat clause to flip
+                    - Choose a variable x which minimizes "break count" in this unsat clause to flip
                     '''
                     unsat_clause = self.pick_unsat_clause()
                     break_count = []
                     for literal in unsat_clause:
                         break_count.append(self.evaluate_breakcount(literal, bs=1, ms=0))
-                    
                     '''
                     Original WalkSAT proposed by Selman, Kautz, and Cohen (1994).
+                    "never make a random move if there exists one literal with zero break-count"
                     '''
                     if self.SKC and (0 in break_count):
                         x = unsat_clause[break_count.index(0)]
                     else:
-                        # Random walk
+                        '''
+                        Random walk
+                        '''
                         if self.random_walk:
                             p = random.random()
                             if p < self.noise_parameter: # pick x randomly from literals in all unsat clause
@@ -60,7 +62,6 @@ class WalkSAT(Base_Solver):
                                 x = unsat_clause[np.argmin(break_count)]
                         else:
                             x = unsat_clause[np.argmin(break_count)]
-                    
                     self.flip(x) 
 
         end = time.time()
