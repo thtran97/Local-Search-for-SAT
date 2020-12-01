@@ -35,7 +35,8 @@ Besides, assignment **X' = flipping(X)** => the difference is only one variable 
 
 In addition, how can we compute efficiently break-count and make-count of a variable *x*
 
-Let's review some strategies of LS-based SAT Solver by fixing some parameters (MAX_FLIPS = 500, MAX_TRIES = 100, noise_parameter = 0.2) and compare their performance with only medium **SAT instances** (*e.g. uf-20-0x.cnf or uf-50-0x.cnf*). As aforementioned, given UNSAT instances, the results are UNKNOWN. 
+
+## Implementations of variant algorithms
 
 #### 1. GSAT, 1992 :white_check_mark:
 
@@ -110,6 +111,10 @@ Intuitively, the idea behind R_Novelty is that the difference in objective funct
 #### 11. Adaptive Memory-Based Local Search (AMLS), 2012 :x:
 
 ***Idea:*** Combine the stategies of aformentioned heuristics.
+
+## Result and comparation of different strategies 
+
+Let's review some strategies of LS-based SAT Solver by fixing some parameters (MAX_FLIPS = 500, MAX_TRIES = 100, noise_parameter = 0.2) and compare their performance with only medium **SAT instances** (*e.g. uf-20-0x.cnf or uf-50-0x.cnf*). As aforementioned, given UNSAT instances, the results are UNKNOWN. 
 
 ## TODO
 
