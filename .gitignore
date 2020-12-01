@@ -130,3 +130,5 @@ dmypy.json
 
 # Local folders
 cnf_instances/*
+.vscode/settings.json
+unit_tests/*
