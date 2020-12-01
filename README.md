@@ -33,7 +33,7 @@ The main computation cost is of checker-part : check if assignment satifies form
 
 Besides, assignment **X' = flipping(X)** => the difference is only one variable => how can we save computational cost in checking **X' |= F**?
 
-In addition, how can we compute efficiently break-count and make-count of a variable *x*
+In addition, how can we compute efficiently break-count and make-count of a variable *x*?
 
 
 ## Implementations of variant algorithms
