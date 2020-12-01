@@ -29,10 +29,12 @@ class GSAT(Base_Solver):
                     self.is_sat = True
                 else:
                     assert len(self.unsat_clauses) > 0 
-                    # GSAT idea (Intensification => focus on best var)
-                    # Among all variables that occur in unsat clauses
-                    # Choose a variable x which minimizes cost to flip
-                    all_unsat_lits = list(set(self.unsat_clauses)) #flatten & remove redundants
+                    '''
+                    - GSAT idea (Intensification => focus on best var)
+                    - Among all variables that occur in unsat clauses
+                    - Choose a variable x which minimizes cost to flip
+                    '''
+                    all_unsat_lits = list(set(self.unsat_clauses)) # flatten & remove redundants
                     break_count = []
                     for literal in all_unsat_lits:
                         break_count.append(self.evaluate_breakcount(literal, bs=1, ms=1))

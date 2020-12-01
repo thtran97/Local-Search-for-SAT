@@ -33,10 +33,15 @@ The main computation cost is of checker-part : check if assignment satifies form
 
 Besides, assignment **X' = flipping(X)** => the difference is only one variable => how can we save computational cost in checking **X' |= F**?
 
-In addition, how can we compute efficiently break-count and make-count of a variable *x*?
+In addition, how can we compute efficiently break-count and make-count of a variable *x*? 
 
+Which variable should be flipped?
 
-## Implementations of variant algorithms
+How to escape the stagnation situation? 
+
+etc. 
+
+## Implementations of LS-based variants
 
 #### 1. GSAT, 1992 :white_check_mark:
 
@@ -58,15 +63,13 @@ In addition, how can we compute efficiently break-count and make-count of a vari
 
 #### 4. GSAT/Tabu & WalkSAT/Tabu, 1997 :x:
 
-***Idea:*** Use a tabu list which store (flipped variables, tabu tenures) to avoid repeating these last recent moves. Intuitively, a couple *(x,t)* means that we forbid flipping *x* for next *t* iterations !
+***Idea:*** Use a tabu list which store (flipped variables, tabu tenures) to avoid repeating these last recent moves. Intuitively, a couple *(x,t)* means that we forbid flipping *x* for next *t* iterations ! 
 
-Note that tabu list should be implemented as a FIFO circular list.
+Note that tabu list should be implemented as a FIFO circular list.  
 
 ***Parameter choice:***
 
-- Length of tabu list: 
-
-- Tabu tenure
+- Length of tabu list => fixed tabu tenure
 
 ***Result:*** 
 
@@ -121,3 +124,4 @@ Let's review some strategies of LS-based SAT Solver by fixing some parameters (M
 - [ ] Implement other heuristics for choosing unsat clause and variable to flip ! 
 
 - [ ] Further idea is to apply Knowledge Compilation techniques so that we can answer consistence query in polynomial time 
+

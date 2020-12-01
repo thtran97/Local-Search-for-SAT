@@ -3,7 +3,7 @@
 import numpy as np
 from utils import get_args
 from full_basic_walksat_solver import WalkSAT_Solver
-# from gsat import GSAT
+
 def main():
     try:
         args = get_args()
