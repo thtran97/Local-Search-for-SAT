@@ -27,7 +27,7 @@ The main pipeline is:
 
 ## Analytics
 
-The algorithm only stop only when formula is SAT or after a defined number of tries and flips. That's why the result is either SAT or UNKNOWN -> not sure if the instances are UNSAT...
+The algorithm only stops when formula is SAT or after a defined number of tries and flips. That's why the result is either SAT or UNKNOWN -> not sure if the instances are UNSAT...
 
 The main computation cost is of checker-part : check if assignment satifies formula, i.e. **X |= F**?.
 
@@ -63,7 +63,7 @@ etc.
 
 - In case of *WalkSAT/Tabu*, if all the variables in the chosen UNSAT clause are tabu => choose another UNSAT clause instead
 
-- If all variables in all UNSAT clauses are tabu =>  tabu list is temporarily ignored
+- If all variables in all UNSAT clauses are tabus =>  tabu list is temporarily ignored
 
 In general, tabu list should be implemented as a FIFO circular list => tabu tenure *t* is fixed (i.e. the length of tabu list) during the search. However, tabu tenure can also be dynamically changed during search in a more complex variant (Reactive Tabu Search, we will see it later).
 
@@ -101,13 +101,13 @@ while stop_trying_criterion is not satisfied:
         T = react(Tf, X_F, X_I)
 ```
 
-Note: In fact, the choice of non-obvilious objective function is a challenge wrt different instances. That's why in this implementation, I only use OLS function for finding local the optimum, but theorically, a NOB should be implemented if necessaire. 
+Note: In fact, the choice of non-obvilious objective function is a challenge w.r.t. different instances. That's why in this implementation, I only use OLS function for finding local the optimum, but theoretically, a NOB should be implemented. 
 
 ***Reactive search => Reinforcement learning for heuristics***
 
 #### 6. Novelty, 1997 :white_check_mark:
 
-***Idea:*** Sort variables according to cost, as does GSAT. Under this specific sort, consider the best *x1* and second-best variable *x2*. 
+***Idea:*** Sort variables according to its cost, as does GSAT. Under this specific sort, consider the best *x1* and second-best variable *x2*. 
 
 (1) If the best one *x1* is NOT the most recently flipped variable => select *x1*. 
 
