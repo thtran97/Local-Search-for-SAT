@@ -101,9 +101,19 @@ Intuitively, the idea behind R_Novelty is that the difference in objective funct
 
 ***Idea:*** Introduce Random Walk into Novelty and R-Novelty to prevent the extreme stagnation behavior. With probability wp => pick randomly, otherwise with probability 1-wp, follow the strategy of Novelty and R-Novelty.
 
-#### 8. AdaptNovelty+, 2002 :x:
+#### 8. AdaptNovelty+, 2002 :white_check_mark:
 
-***Idea:*** Adjust the noise parameter p according to search history, i.e. increase p when detecting a stagnation behavior. Then decrease p until the next stagnation situation is detected.
+***Idea:*** Adjust the noise parameter wp according to search history, i.e. increase wp when detecting a stagnation behavior. Then decrease wp until the next stagnation situation is detected. Concretely,
+
+- Initialize wp = 0 => greedy search with Novelty strategy
+
+- No improvements over some predefined steps => stagnation detected 
+
+- Increase wp until quit stagnation situation
+
+- Overcome the stagnation => decrease wp until the next stagnation is detected 
+
+Note : dynamic noise parameter of random walk, not the one of Novelty mechanism.
 
 #### 9. Reactive Tabu Search (H-RTS), 1997 :x:
 
