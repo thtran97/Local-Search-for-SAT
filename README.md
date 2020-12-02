@@ -153,9 +153,11 @@ Intuitively, the idea behind R_Novelty is that the difference in objective funct
 
 Note : dynamic noise parameter of random walk, not the one of Novelty mechanism.
 
-#### 10. Iterated Reactive Tabu Search (IRoTS), 2003 :x:
+#### 10. Iterated Robust Tabu Search (IRoTS), 2003 :x:
 
-***Idea:*** Combine the performances of both approaches.
+***Idea:*** Combine the performances of both Iterated LS and TS.
+
+- [ ] Read and summarize the idea of original paper's work
 
 #### 11. Adaptive Memory-Based Local Search (AMLS), 2012 :x:
 
@@ -167,6 +169,8 @@ Let's review some strategies of LS-based SAT Solver by fixing some parameters (M
 
 ## TODO
 
+- [ ] Use 2-flip or 3-flip neighborhoods instead of 1-flip ones
+
 - [ ] Implement other heuristics for choosing unsat clause and variable to flip ! 
 
 - [ ] Find benchmarking dataset (e.g. [SATLIB benchmark](https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html)) and criterions for measuring the performance of a strategy and use it to compare with others
@@ -175,3 +179,4 @@ Let's review some strategies of LS-based SAT Solver by fixing some parameters (M
 
 - [ ] Further idea is to apply Knowledge Compilation techniques so that we can answer consistence query in polynomial time 
 
+- [ ] Involve to Max-SAT & finding Max-SAT benchmarking instancecs
