@@ -65,9 +65,47 @@ etc.
 
 - If all variables in all UNSAT clauses are tabu =>  tabu list is temporarily ignored
 
-In general, tabu list should be implemented as a FIFO circular list => tabu tenure *t* is fixed as the length of tabu list. However, tabu tenure can be dynamically changed during search in a more complex variant (Reactive Tabu Search, we will see it later).
+In general, tabu list should be implemented as a FIFO circular list => tabu tenure *t* is fixed (i.e. the length of tabu list) during the search. However, tabu tenure can also be dynamically changed during search in a more complex variant (Reactive Tabu Search, we will see it later).
 
-#### 5. Novelty, 1997 :white_check_mark:
+
+#### 5. Hamming-Reactive Tabu Search (H-RTS), 1997 :white_check_mark:
+
+***Idea:***  Tabu tenure T(t) is dynamically changed during the search. More precisely, "T(t) inscreases when repetitions happen and decreases when repititions disappear for a sufficiently long search period". The general pipeline proposed by R.Battiti and M.Prostasi (1997) is:
+
+```python
+while stop_trying_criterion is not satisfied: 
+    X = random_assignment
+    Tf = 0.1            # fractional prohibtion
+    T = int(Tf * nvars) # tabu tenure 
+    '''
+    Non-oblivious LS => find quickly a local optimum
+    NOB-LS is similar to OLS, except the objective function used to choose the best variable to flip
+    '''
+    X = NOB_LS(f_NOB)
+
+    while stop_flipping_criterion is not satisfied:
+        '''
+        Obvious local search => find a local optimum
+        Put simply, use cost = break-make = f_OB
+        '''
+        X = OLS(f_OB)
+        X_I = X
+        '''
+        Reactive Tabu Search
+        - Compute X after 2(T+1) iterations
+        - Change dynamically T 
+        '''
+        for 2(T+1) iterations:
+            X = TabuSearch(f_OB)
+        X_F = X
+        T = react(Tf, X_F, X_I)
+```
+
+Note: In fact, the choice of non-obvilious objective function is a challenge wrt different instances. That's why in this implementation, I only use OLS function for finding local the optimum, but theorically, a NOB should be implemented if necessaire. 
+
+***Reactive search => Reinforcement learning for heuristics***
+
+#### 6. Novelty, 1997 :white_check_mark:
 
 ***Idea:*** Sort variables according to cost, as does GSAT. Under this specific sort, consider the best *x1* and second-best variable *x2*. 
 
@@ -79,7 +117,7 @@ Otherwise, (2a) select *x2* with probability p, (2b) select *x1* with probabilit
 
 => Enhance its diversification capacity.         
 
-#### 6. R-Novelty, 1997 :white_check_mark:
+#### 7. R-Novelty, 1997 :white_check_mark:
 
 ***Idea:*** Similar to Novelty, except in case of *x1* is the most recently flipped variable !. 
 
@@ -97,11 +135,11 @@ Intuitively, the idea behind R_Novelty is that the difference in objective funct
 
 - [ ] Influence of noise parameter p ? 
 
-#### 7. Novelty+ & R-Novelty+, 1999 :white_check_mark:
+#### 8. Novelty+ & R-Novelty+, 1999 :white_check_mark:
 
 ***Idea:*** Introduce Random Walk into Novelty and R-Novelty to prevent the extreme stagnation behavior. With probability wp => pick randomly, otherwise with probability 1-wp, follow the strategy of Novelty and R-Novelty.
 
-#### 8. AdaptNovelty+, 2002 :white_check_mark:
+#### 9. AdaptNovelty+, 2002 :white_check_mark:
 
 ***Idea:*** Adjust the noise parameter wp according to search history, i.e. increase wp when detecting a stagnation behavior. Then decrease wp until the next stagnation situation is detected. Concretely,
 
@@ -114,10 +152,6 @@ Intuitively, the idea behind R_Novelty is that the difference in objective funct
 - Overcome the stagnation => decrease wp until the next stagnation is detected 
 
 Note : dynamic noise parameter of random walk, not the one of Novelty mechanism.
-
-#### 9. Reactive Tabu Search (H-RTS), 1997 :x:
-
-***Idea:***  Tabu tenure is dynamically changed during the search.
 
 #### 10. Iterated Reactive Tabu Search (IRoTS), 2003 :x:
 
