@@ -60,10 +60,8 @@ class WalkSAT_Tabu(Base_Solver):
                     while len(unsat_clause) == 0 and len(list_id_unsat_clauses) > 0:
                         random_id = random.choice(list_id_unsat_clauses)
                         list_id_unsat_clauses.remove(random_id)
-                        unsat_clause = self.list_clauses[random_id].copy() ## Attention: Copy list !
-                        for literal in unsat_clause:
-                            if abs(literal) in self.tabu_list:
-                                unsat_clause.remove(literal)            
+                        unsat_clause = self.list_clauses[random_id]
+                        unsat_clause = list(set(unsat_clause)^set(self.tabu_list))         
                     if len(unsat_clause) == 0: #ignore
                         random_id =  random.choice(self.id_unsat_clauses)
                         unsat_clause = self.list_clauses[random_id]

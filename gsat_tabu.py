@@ -35,6 +35,16 @@ class GSAT_Tabu(Base_Solver):
             self.tabu_list.pop(0)
             self.tabu_list.append(literal)
 
+    def pick_all_lits(self,id_unsat_clauses, tabu_list=None):
+        all_allowed_lits = []
+        for ind in id_unsat_clauses:
+            all_allowed_lits += self.list_clauses[ind]   
+        if tabu_list is not None:
+            all_allowed_lits = list(set(all_allowed_lits)^set(tabu_list))
+        else:
+            all_allowed_lits = list(set(all_allowed_lits))
+        return all_allowed_lits
+
     def solve(self):
         initial =  time.time()
         self.initialize_pool()
@@ -51,27 +61,16 @@ class GSAT_Tabu(Base_Solver):
                     - Among all variables that occur in unsat clauses
                     - Choose a variable x which minimizes cost to flip
                     '''
-                    all_unsat_lits = []
-                    for ind in self.id_unsat_clauses:
-                        all_unsat_lits += self.list_clauses[ind]
-                    all_unsat_lits = list(set(all_unsat_lits))
-                    
-                    '''
-                    Remove all tabus in list of candidates
-                    If all vars are tabu => ignore tabu and take initial list of variables
-                    '''
-                    copy = all_unsat_lits.copy()
-                    for literal in copy: # remove all tabus in candidate variables
-                        if abs(literal) in self.tabu_list:
-                            copy.remove(literal)
-                    if len(copy) > 0: 
-                        all_unsat_lits = copy
+                    # compute allowed literals wrt tabu list
+                    all_allowed_lits = self.pick_all_lits(self.id_unsat_clauses, self.tabu_list)
+                    if len(all_allowed_lits) == 0: # else take all_allowed_lits and ignore tabu
+                        all_allowed_lits = self.pick_all_lits(self.id_unsat_clauses)
                     '''
                     Compute cost when flipping each literal 
                     Cost = break - make
                     '''
                     break_count = []
-                    for literal in all_unsat_lits:
+                    for literal in all_allowed_lits:
                         break_count.append(self.evaluate_breakcount(literal, bs=1, ms=1))
                     '''
                     Random walk  
@@ -79,11 +78,11 @@ class GSAT_Tabu(Base_Solver):
                     if self.random_walk:
                         p = random.random()
                         if p < self.noise_parameter: # pick x randomly from literals in all unsat clause
-                            x = random.choice(all_unsat_lits)
+                            x = random.choice(all_allowed_lits)
                         else: 
-                            x = all_unsat_lits[np.argmin(break_count)]
+                            x = all_allowed_lits[np.argmin(break_count)]
                     else:
-                        x = all_unsat_lits[np.argmin(break_count)]
+                        x = all_allowed_lits[np.argmin(break_count)]
                     
                     self.flip(x) 
                     self.add_tabu(x)
