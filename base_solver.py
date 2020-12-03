@@ -12,8 +12,8 @@ class Base_Solver:
         self.pool = dict() #key: literal -> element: index of clause which contains literal 
         self.id_unsat_clauses = [] # save id of unsat clause
         self.costs = np.zeros(len(self.list_clauses)) #compute nb of literals make clause true (i.e. for clause Ci, if fi>0 => T, fi==0 => F)
-        self.MAX_TRIES = 100
-        self.MAX_FLIPS = 500
+        self.MAX_TRIES = 50
+        self.MAX_FLIPS = 100*self.nvars
         self.nb_tries = 0
         self.nb_flips = 0 
         self.is_sat = False

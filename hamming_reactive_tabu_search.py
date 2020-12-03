@@ -74,7 +74,7 @@ class H_RTS(Base_Solver):
             '''
             TODO: NOB_LS here
             '''
-            while self.nb_flips < self.MAX_FLIPS and not self.is_sat:
+            while self.nb_flips < self.MAX_FLIPS and not self.check():
                 '''
                 [Local Search]
                 - GSAT idea (Intensification => focus on best var)
@@ -99,9 +99,6 @@ class H_RTS(Base_Solver):
                     else: 
                         improved = False
                 X_i = self.assignment.copy()
-                if self.check():
-                    self.is_sat =  True
-                    break
                 '''
                 [Reactive Tabu Search] 
                 - Initialize tabu list with defined tabu tenure
@@ -135,14 +132,12 @@ class H_RTS(Base_Solver):
                     self.add_tabu(x)
                     it += 1
                 X_f = self.assignment.copy()
-                if self.check():
-                    self.is_sat=True
-                    break
                 '''
                 Update tabu tenure based on search history
                 '''
                 self.tabu_tenure = self.react(X_f, X_i)
-    
+            if self.check():
+                self.is_sat = True
         end = time.time()
         print('Nb flips:  {0}      '.format(self.nb_flips))
         print('Nb tries:  {0}      '.format(self.nb_tries))
