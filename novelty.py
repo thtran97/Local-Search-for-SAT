@@ -17,8 +17,7 @@ class Novelty(Base_Solver):
         self.noise_parameter = noise_parameter
         self.most_recent = None
         # Introduce random walk noise parameter => Novelty+
-        if random_walk_noise is not None:
-            self.random_walk_noise = random_walk_noise
+        self.random_walk_noise = random_walk_noise
 
     def solve(self):
         initial =  time.time()

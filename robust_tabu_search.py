@@ -10,7 +10,7 @@ import time
 from itertools import chain
 
 class RoTS(Base_Solver):
-    
+
     def __init__(self, input_cnf_file, verbose):
         super(RoTS, self).__init__(input_cnf_file, verbose)
         '''
@@ -54,6 +54,10 @@ class RoTS(Base_Solver):
             self.initialize_cost()
             self.last_move = [-1 for _ in self.assignment]
             self.best_cost = len(self.id_unsat_clauses)
+            self.tabu_tenure = int(self.nvars/10 + 4)
+            ''' 
+            RoTS mechanism within MAX_FLIPS
+            ''' 
             while self.nb_flips < self.MAX_FLIPS and not self.check():
                 assert len(self.id_unsat_clauses) > 0 
                 '''
