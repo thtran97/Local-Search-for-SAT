@@ -29,7 +29,7 @@ The main pipeline is:
 
 The algorithm only stops when formula is SAT or after a defined number of tries and flips. That's why the result is either SAT or UNKNOWN -> not sure if the instances are UNSAT...
 
-The main computation cost is of checker-part : check if assignment satifies formula, i.e. **X |= F**?.
+The main computational cost is of *Checker* part: check if assignment satifies formula, i.e. **X |= F**?.
 
 Besides, assignment **X' = flip(X)** => the difference is only of one variable => how can we save computational cost in (re)checking **X' |= F**?.
 
@@ -153,13 +153,31 @@ Intuitively, the idea behind R_Novelty is that the difference in objective funct
 
 Note : dynamic noise parameter of random walk, not the one of Novelty mechanism.
 
-#### 10. Iterated Robust Tabu Search (IRoTS), 2003 :x:
+#### 10. Robust Tabu Search (RoTS), 1991 :white_check_mark:
 
-***Idea:*** Combine the performances of both Iterated LS and TS.
+***Idea:*** Similar with traditional TS, but with an exception, called as *aspiration mechanism* : if a tabu moves can lead to an improvement (better than non-tabu moves) over the best solution seen so far, the tabu move is accepted !
 
-- [ ] Read and summarize the idea of original paper's work
+- In addition, if a variable is not flipped within long steps => it is forced to be flipped. 
 
-#### 11. Adaptive Memory-Based Local Search (AMLS), 2012 :x:
+- Finally, randomize tabu tenure every n iterations.
+
+#### 11. Iterated Robust Tabu Search (IRoTS), 2003 :white_check_mark:
+
+***Idea:*** Combine the performances of both Iterated LS and TS. The core pipeline is based on Iterated Local Search, in which the pseudo code is shown below:
+
+```python
+x0 = random_assignment
+x* = LocalSearch(x0)                ## --> RoTS here! 
+
+while stopping_criterion == False: 
+    x_p  = Perturbation(x*)          ## --> RoTS here!
+    x_p* = LocalSearch(x_p)         ## --> RoTS here!
+    x*   = AcceptanceCriterion(x*, X_p*) 
+```
+
+Simply by involving LocalSearch and Perturbation procedure based on RoTS => Iterated RoTS (IRoTS). Note that the tabu tenure used for Perturbation phase is substantially larger than the one used for LS phase => favor the diversification ! On the other hands, the number of RoTS iterations in LS phase is much more larger than the one in Perturbation phase (i.e escape_threshold of LS >> perturbation_iterations) => favor the intensification ! 
+
+#### 12. Adaptive Memory-Based Local Search (AMLS), 2012 :x:
 
 ***Idea:*** Combine the stategies of aformentioned heuristics.
 
