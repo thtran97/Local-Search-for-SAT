@@ -1,6 +1,6 @@
 '''
 References
-[1] D. McAllester, B. Selman, and H. Kautz, “Evidence for invariants in local search,” Proc. Natl. Conf. Artif. Intell., pp. 321–326, 1997.
+[1] K. Smyth, H. H. Hoos, and T. Stützle, “Iterated robust tabu search for MAX-SAT,” in Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics), 2003, vol. 2671, pp. 129–144, doi: 10.1007/3-540-44886-1_12.
 '''
 
 from base_solver import Base_Solver

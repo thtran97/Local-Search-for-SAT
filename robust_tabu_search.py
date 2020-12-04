@@ -1,6 +1,7 @@
 '''
 References
-[1] D. McAllester, B. Selman, and H. Kautz, “Evidence for invariants in local search,” Proc. Natl. Conf. Artif. Intell., pp. 321–326, 1997.
+[1] K. Smyth, H. H. Hoos, and T. Stützle, “Iterated robust tabu search for MAX-SAT,” in Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics), 2003, vol. 2671, pp. 129–144, doi: 10.1007/3-540-44886-1_12.
+[2] E. Taillard, “Robust taboo search for the quadratic assignment problem,” Parallel Comput., vol. 17, no. 4–5, pp. 443–455, 1991, doi: 10.1016/S0167-8191(05)80147-4.
 '''
 
 from base_solver import Base_Solver
