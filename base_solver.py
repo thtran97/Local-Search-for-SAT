@@ -57,7 +57,7 @@ class Base_Solver:
     def evaluate_breakcount(self, literal, bs=1, ms=1):
         # Compute the breakcount score: #clause which turn SAT -> UNSAT
         ind = 0
-        if literal in self.assignment:
+        if literal in self.assignment:  
             ind = self.assignment.index(literal)
         elif -literal in self.assignment:
             ind = self.assignment.index(-literal) 
