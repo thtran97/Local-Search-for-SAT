@@ -202,15 +202,27 @@ Let's review some strategies of LS-based SAT Solver by fixing some parameters (M
 ## References
 
 .. [1] B. Selman, H. Kautz, and B. Cohen, “Noise strategies for local search,” AAAI/IAAI Proc., no. 1990, pp. 337–343, 1994.
+
 .. [2] E. Taillard, “Robust taboo search for the quadratic assignment problem,” Parallel Comput., vol. 17, no. 4–5, pp. 443–455, 1991, doi: 10.1016/S0167-8191(05)80147-4.
+
 .. [3] K. Smyth, H. H. Hoos, and T. Stützle, “Iterated robust tabu search for MAX-SAT,” in Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics), 2003, vol. 2671, pp. 129–144, doi: 10.1007/3-540-44886-1_12.
+
 .. [4] Z. Lü and J.-K. K. Hao, “Adaptive Memory-Based Local Search for MAX-SAT,” Elsevier, Aug. 2012. doi: 10.1016/j.asoc.2012.01.013.
+
 .. [5] M. Yagiura and T. Ibaraki, “Efficient 2 and 3-flip neighborhood search algorithms for the MAX SAT,” Lect. Notes Comput. Sci. (including Subser. Lect. Notes Artif. Intell. Lect. Notes Bioinformatics), vol. 1449, no. 2, pp. 105–116, 1998, doi: 10.1007/3-540-68535-9_14.
+
 .. [6] D. Pankratov and A. Borodin, “On the relative merits of simple local search methods for the MAX-SAT problem,” Lect. Notes Comput. Sci. (including Subser. Lect. Notes Artif. Intell. Lect. Notes Bioinformatics), vol. 6175 LNCS, pp. 223–236, 2010, doi: 10.1007/978-3-642-14186-7_19.
+
 .. [7] R. Battiti and M. Protasi, “Reactive Search, a history-sensitive heuristic for MAX-SAT,” ACM J. Exp. Algorithmics, vol. 2, p. 2, 1997, doi: 10.1145/264216.264220.
+
 .. [8] R. Battiti and G. Tecchiolli, “The Reactive Tabu Search,” ORSA J. Comput., vol. 6, no. 2, pp. 126–140, 1994, doi: 10.1287/ijoc.6.2.126.
+
 .. [9] H. H. Hoos, “An adaptive noise mechanism for walkSAT,” Proc. Natl. Conf. Artif. Intell., pp. 655–660, 2002.
+
 .. [10] H. H. Hoos and T. Stützle, “Towards a characterization of the behaviour of stochastic local search algorithms for SAT,” Artif. Intell., vol. 112, no. 1, pp. 213–232, 1999, doi: 10.1016/S0004-3702(99)00048-X.
+
 .. [11] D. McAllester, B. Selman, and H. Kautz, “Evidence for invariants in local search,” Proc. Natl. Conf. Artif. Intell., pp. 321–326, 1997.
+
 .. [12] B. Mazure, L. Sais, and E. Gregoire, “Tabu search for SAT,” Proc. Natl. Conf. Artif. Intell., pp. 281–285, 1997.
+
 .. [13] B. Selman, H. Levesque, and D. Mitchell, “New method for solving hard satisfiability problems,” in Proceedings Tenth National Conference on Artificial Intelligence, 1992, no. July, pp. 440–446.
