@@ -177,19 +177,23 @@ while stopping_criterion == False:
 
 Simply by involving LocalSearch and Perturbation procedure based on RoTS => Iterated RoTS (IRoTS). Note that the tabu tenure used for Perturbation phase is substantially larger than the one used for LS phase => favor the diversification ! On the other hands, the number of RoTS iterations in LS phase is much more larger than the one in Perturbation phase (i.e escape_threshold of LS >> perturbation_iterations) => favor the intensification ! 
 
-#### 12. Adaptive Memory-Based Local Search (AMLS), 2012 :x:
+#### 12. Adaptive Memory-Based Local Search (AMLS), 2012 :white_check_mark:
 
-***Idea:*** Combine the stategies of aformentioned heuristics.
+***Idea:*** Combine the stategies of aformentioned heuristics [4].
 
 ## Result and comparation of different strategies 
 
 Let's review some strategies of LS-based SAT Solver by fixing some parameters (MAX_FLIPS = 500, MAX_TRIES = 100, noise_parameter = 0.2) and compare their performance with only medium **SAT instances** (*e.g. uf-20-0x.cnf or uf-50-0x.cnf*). As aforementioned, given UNSAT instances, the results are UNKNOWN. 
+
+In order to have a better overview and best comparison of these strategies, we should run tests on MaxSAT problems !!!
 
 ## TODO
 
 - [ ] Use 2-flip or 3-flip neighborhoods instead of 1-flip ones
 
 - [ ] Implement other heuristics for choosing unsat clause and variable to flip ! 
+
+- [ ] Use a cache for storing score of every variable
 
 - [ ] Find benchmarking dataset (e.g. [SATLIB benchmark](https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html)) and criterions for measuring the performance of a strategy and use it to compare with others
 
