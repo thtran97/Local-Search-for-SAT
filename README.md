@@ -29,7 +29,7 @@ The main pipeline is:
 
 The algorithm only stops when formula is SAT or after a defined number of tries and flips. That's why the result is either SAT or UNKNOWN -> not sure if the instances are UNSAT-.
 
-The main computational cost is of *Checker* part: check if assignment satifies formula, i.e. **X |= F**?.
+The main computational cost is of *Checker* part: check if assignment satisfies formula, i.e. **X |= F**?.
 
 Besides, assignment **X' = flip(X)** => the difference is only of one variable => how can we save computational cost in (re)checking **X' |= F**?.
 
@@ -53,7 +53,7 @@ etc.
 
 #### 3. WalkSAT & WalkSAT/Random Walk, 1994 :white_check_mark:
 
-***Idea:*** Pick (randomly) one UNSAT clause, then pick the variable that minimizes break => score = break. In addition, the original strategy of Selman, Kautz, and Cohen (1994), called SKC stragegy, proposed that: "never make a random move if there exists one literal with zero break-count". Obviously, flipping literal with zero break-count will improve the objective function (= number of SAT clauses).
+***Idea:*** Pick (randomly) one UNSAT clause, then pick the variable that minimizes break => score = break. In addition, the original strategy of Selman, Kautz, and Cohen (1994), called SKC strategy, proposed that: "never make a random move if there exists one literal with zero break-count". Obviously, flipping literal with zero break-count will improve the objective function (= number of SAT clauses).
 
 #### 4. GSAT/Tabu & WalkSAT/Tabu, 1997 :white_check_mark:
 
@@ -70,12 +70,12 @@ In general, tabu list should be implemented as a FIFO circular list => tabu tenu
 
 #### 5. Hamming-Reactive Tabu Search (H-RTS), 1997 :white_check_mark:
 
-***Idea:***  Tabu tenure T(t) is dynamically changed during the search. More precisely, "T(t) inscreases when repetitions happen and decreases when repititions disappear for a sufficiently long search period". The general pipeline proposed by R.Battiti and M.Prostasi (1997) is:
+***Idea:***  Tabu tenure T(t) is dynamically changed during the search. More precisely, "T(t) increases when repetitions happen and decreases when repetitions disappear for a sufficiently long search period". The general pipeline proposed by R.Battiti and M.Prostasi (1997) is:
 
 ```python
 while stop_trying_criterion is not satisfied: 
     X = random_assignment
-    Tf = 0.1            # fractional prohibtion
+    Tf = 0.1            # fractional prohibition
     T = int(Tf * nvars) # tabu tenure 
     '''
     Non-oblivious LS => find quickly a local optimum
@@ -85,7 +85,7 @@ while stop_trying_criterion is not satisfied:
 
     while stop_flipping_criterion is not satisfied:
         '''
-        Obvious local search => find a local optimum
+        Oblivious local search => find a local optimum
         Put simply, use cost = break-make = f_OB
         '''
         X = OLS(f_OB)
@@ -101,7 +101,7 @@ while stop_trying_criterion is not satisfied:
         T = react(Tf, X_F, X_I)
 ```
 
-Note: In fact, the choice of non-obvilious objective function is a challenge w.r.t. different instances. That's why in this implementation, I only use OLS function for finding local the optimum, but theoretically, a NOB should be implemented. 
+Note: In fact, the choice of non-oblivious objective function is a challenge w.r.t. different instances. That's why in this implementation, I only use OLS function for finding local the optimum, but theoretically, a NOB should be implemented. 
 
 ***Reactive search => Reinforcement learning for heuristics***
 
@@ -201,7 +201,7 @@ In order to have a better overview and best comparison of these strategies, we s
 
 - [ ] Further idea is to apply Knowledge Compilation techniques so that we can answer consistence query in polynomial time 
 
-- [ ] Involve to Max-SAT & finding Max-SAT benchmarking instancecs
+- [ ] Involve to Max-SAT & finding Max-SAT benchmarking instances
 
 ## References
 
